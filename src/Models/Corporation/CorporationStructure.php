@@ -24,6 +24,7 @@ namespace Seat\Eveapi\Models\Corporation;
 
 use OpenApi\Attributes as OA;
 use Seat\Eveapi\Models\Assets\CorporationAsset;
+use Seat\Eveapi\Models\Corporation\CorporationInfo;
 use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Eveapi\Models\Sde\SolarSystem;
 use Seat\Eveapi\Models\Universe\UniverseStructure;
@@ -264,6 +265,14 @@ class CorporationStructure extends ExtensibleModel implements HasTypeID
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function corporation()
+    {
+        return $this->belongsTo(CorporationInfo::class, 'corporation_id', 'corporation_id');
+    }
+
     public function info()
     {
 

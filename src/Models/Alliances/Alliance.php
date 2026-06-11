@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Seat\Eveapi\Models\Contacts\AllianceContact;
 use Seat\Eveapi\Models\Corporation\CorporationInfo;
+use Seat\Eveapi\Models\Corporation\CorporationStructure;
 use Seat\Eveapi\Models\Universe\UniverseName;
 use Seat\Services\Models\ExtensibleModel;
 use Seat\Tests\Eveapi\Database\Factories\AllianceFactory;
@@ -144,6 +145,21 @@ class Alliance extends ExtensibleModel
             'corporation_id',
             'alliance_id',
             'corporation_id'
+        );
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function structures()
+    {
+        return $this->hasManyThrough(
+            CorporationStructure::class,
+            CorporationInfo::class,
+            'alliance_id',          // Foreign key on CorporationInfo
+            'corporation_id',       // Foreign key on CorporationStructure
+            'alliance_id',          // Local key on Alliance
+            'corporation_id'        // Local key on CorporationInfo
         );
     }
 
